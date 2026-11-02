@@ -16,14 +16,13 @@ sudo chmod 600 certs/*.key
 ```
 
 
-2. 
-go to `/etc/hosts` and add those
+2.1. go to `/etc/hosts` and add those
 ```
 127.0.0.1 db1.1jz.cc
 127.0.0.1 db2.1jz.cc
 127.0.0.1 db3.1jz.cc
 ```
-or just make a dns record pointing them to the correct address
+2.2. add dns record in your dns or whatever
 
 3. `docker compose up`
 
