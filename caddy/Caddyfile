@@ -1,0 +1,24 @@
+{
+	admin off
+	auto_https off
+
+	layer4 {
+		:5432 {
+			@db1 tls sni db1.1jz.cc
+			route @db1 {
+				proxy pg1:5432
+			}
+
+			@db2 tls sni db2.1jz.cc
+			route @db2 {
+				proxy pg2:5432
+			}
+
+			@db3 tls sni db3.1jz.cc
+			route @db3 {
+				proxy pg3:5432
+			}
+
+		}
+	}
+}
