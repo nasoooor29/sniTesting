@@ -7,6 +7,7 @@ requirements:
 
 1. gen certs
 ```bash
+mkdir certs
 for i in 1 2 3; do
  openssl req -x509 -newkey rsa:2048 -nodes -keyout certs/db$i.key -out certs/db$i.crt -days 365 -subj "/CN=db$i.1jz.cc" -addext "subjectAltName=DNS:db$i.1jz.cc"
 done
