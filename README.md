@@ -16,3 +16,15 @@ sudo chmod 600 certs/*.key
 ```
 
 2. `docker compose up`
+
+3. test it with
+
+```bash
+for i in 1 2 3; do
+ echo "===== db$i ====="
+
+ docker compose exec -T pg$i psql -U admin -d app -v ON_ERROR_STOP=1 -c "CREATE TABLE IF NOT EXISTS test (db$i TEXT);" -c "INSERT INTO test (db$i) VALUES ('db$i');"
+
+ PGPASSWORD=admin psql "host=db$i.1jz.cc port=5432 user=admin dbname=app sslmode=require sslnegotiation=direct" -c "SELECT db$i FROM test;"
+done
+```
