@@ -1,0 +1,86 @@
+services:
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - pg1
+      - pg2
+      - pg3
+    networks:
+      - dbnet
+
+  pg1:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: app
+    volumes:
+      - pg1_data:/var/lib/postgresql/data
+      - ./certs:/certs:ro
+    command:
+      - postgres
+      - -c
+      - ssl=on
+      - -c
+      - ssl_cert_file=/certs/db1.crt
+      - -c
+      - ssl_key_file=/certs/db1.key
+    networks:
+      - dbnet
+
+  pg2:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: app
+    volumes:
+      - pg2_data:/var/lib/postgresql/data
+      - ./certs:/certs:ro
+    command:
+      - postgres
+      - -c
+      - ssl=on
+      - -c
+      - ssl_cert_file=/certs/db2.crt
+      - -c
+      - ssl_key_file=/certs/db2.key
+    networks:
+      - dbnet
+
+  pg3:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: app
+    volumes:
+      - pg3_data:/var/lib/postgresql/data
+      - ./certs:/certs:ro
+    command:
+      - postgres
+      - -c
+      - ssl=on
+      - -c
+      - ssl_cert_file=/certs/db3.crt
+      - -c
+      - ssl_key_file=/certs/db3.key
+    networks:
+      - dbnet
+
+volumes:
+  pg1_data:
+  pg2_data:
+  pg3_data:
+
+networks:
+  dbnet:
+    driver: bridge
