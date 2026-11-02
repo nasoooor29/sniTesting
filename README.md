@@ -15,9 +15,19 @@ sudo chown 999:999 certs/*.key
 sudo chmod 600 certs/*.key
 ```
 
-2. `docker compose up`
 
-3. test it with
+2. 
+go to `/etc/hosts` and add those
+```
+127.0.0.1 db1.1jz.cc
+127.0.0.1 db2.1jz.cc
+127.0.0.1 db3.1jz.cc
+```
+or just make a dns record pointing them to the correct address
+
+3. `docker compose up`
+
+4. test it with
 
 ```bash
 for i in 1 2 3; do
